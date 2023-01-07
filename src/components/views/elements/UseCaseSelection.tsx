@@ -14,72 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from "classnames";
-import React, { useEffect, useState } from "react";
-
-import { _t } from "../../../languageHandler";
-import { UseCase } from "../../../settings/enums/UseCase";
-import SplashPage from "../../structures/SplashPage";
-import AccessibleButton from "../elements/AccessibleButton";
-import { UseCaseSelectionButton } from "./UseCaseSelectionButton";
+import React, { useEffect } from "react";
+import { _t } from "matrix-react-sdk/src/languageHandler";
+import { UseCase } from "matrix-react-sdk/src/settings/enums/UseCase";
+import SplashPage from "matrix-react-sdk/src/components/structures/SplashPage";
 
 interface Props {
     onFinished: (useCase: UseCase) => void;
 }
 
-const TIMEOUT = 1500;
+const TIMEOUT = 2500;
 
 export function UseCaseSelection({ onFinished }: Props) {
-    const [selection, setSelected] = useState<UseCase | null>(null);
 
     // Call onFinished 1.5s after `selection` becomes truthy, to give time for the animation to run
     useEffect(() => {
-        if (selection) {
-            let handler: number | null = window.setTimeout(() => {
-                handler = null;
-                onFinished(selection);
-            }, TIMEOUT);
-            return () => {
-                clearTimeout(handler);
-                handler = null;
-            };
-        }
-    }, [selection, onFinished]);
+        window.setTimeout(() => {
+            onFinished(UseCase.CommunityMessaging);
+        }, TIMEOUT);
+    });
 
     return (
         <SplashPage
-            className={classNames("mx_UseCaseSelection", {
-                mx_UseCaseSelection_selected: selection !== null,
-            })}
+            className="mx_UseCaseSelection"
         >
             <div className="mx_UseCaseSelection_title mx_UseCaseSelection_slideIn">
                 <h1>{_t("You're in")}</h1>
-            </div>
-            <div className="mx_UseCaseSelection_info mx_UseCaseSelection_slideInDelayed">
-                <h2>{_t("Who will you chat to the most?")}</h2>
-                <h3>{_t("We'll help you get connected.")}</h3>
-            </div>
-            <div className="mx_UseCaseSelection_options mx_UseCaseSelection_slideInDelayed">
-                <UseCaseSelectionButton
-                    useCase={UseCase.PersonalMessaging}
-                    selected={selection === UseCase.PersonalMessaging}
-                    onClick={setSelected}
-                />
-                <UseCaseSelectionButton
-                    useCase={UseCase.WorkMessaging}
-                    selected={selection === UseCase.WorkMessaging}
-                    onClick={setSelected}
-                />
-                <UseCaseSelectionButton
-                    useCase={UseCase.CommunityMessaging}
-                    selected={selection === UseCase.CommunityMessaging}
-                    onClick={setSelected}
-                />
-            </div>
-            <div className="mx_UseCaseSelection_skip mx_UseCaseSelection_slideInDelayed">
-                <AccessibleButton kind="link" onClick={async () => setSelected(UseCase.Skip)}>
-                    {_t("Skip")}
-                </AccessibleButton>
+                <img src="themes/paracordBrand/web/paracord.svg" alt="Paracord" />
             </div>
         </SplashPage>
     );
