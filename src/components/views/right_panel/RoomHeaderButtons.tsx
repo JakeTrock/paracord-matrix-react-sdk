@@ -246,6 +246,21 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         }
     };
 
+    private onRoomPeopleClicked = () => {
+        // use roomPanelPhase rather than this.state.phase as it remembers the latest one if we close
+        const currentPhase = RightPanelStore.instance.currentCard.phase;
+        if (ROOM_INFO_PHASES.includes(currentPhase)) {
+            if (this.state.phase === currentPhase) {
+                this.setPhase(currentPhase);
+            } else {
+                this.setPhase(currentPhase, RightPanelStore.instance.currentCard.state);
+            }
+        } else {
+            // This toggles for us, if needed
+            this.setPhase(RightPanelPhases.RoomMemberList);
+        }
+    };
+
     private onNotificationsClicked = () => {
         // This toggles for us, if needed
         this.setPhase(RightPanelPhases.NotificationPanel);
@@ -326,14 +341,25 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 ) : null}
             </HeaderButton>,
         );
+        // rightPanelPhaseButtons.set(
+        //     RightPanelPhases.RoomSummary,
+        //     <HeaderButton
+        //         key="roomSummaryButton"
+        //         name="roomSummaryButton"
+        //         title={_t("Room info")}
+        //         isHighlighted={this.isPhase(ROOM_INFO_PHASES)}
+        //         onClick={this.onRoomSummaryClicked} //TODO:add exporting as a premo feature, personal journal
+        //     />,
+        // );
+
         rightPanelPhaseButtons.set(
-            RightPanelPhases.RoomSummary,
+            RightPanelPhases.RoomMemberList,
             <HeaderButton
-                key="roomSummaryButton"
-                name="roomSummaryButton"
-                title={_t("Room info")}
+                key="roomMemberButton"
+                name="roomMemberButton"
+                title={_t("People")}
                 isHighlighted={this.isPhase(ROOM_INFO_PHASES)}
-                onClick={this.onRoomSummaryClicked}
+                onClick={this.onRoomPeopleClicked}
             />,
         );
 
