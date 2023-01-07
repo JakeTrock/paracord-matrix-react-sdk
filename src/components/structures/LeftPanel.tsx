@@ -338,19 +338,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             );
         }
 
-        let rightButton: JSX.Element;
-        if (this.state.showBreadcrumbs === BreadcrumbsMode.Labs) {
-            rightButton = <RecentlyViewedButton />;
-        } else if (this.state.activeSpace === MetaSpace.Home && shouldShowComponent(UIComponent.ExploreRooms)) {
-            rightButton = (
-                <AccessibleTooltipButton
-                    className="mx_LeftPanel_exploreButton"
-                    onClick={this.onExplore}
-                    title={_t("Explore rooms")}
-                />
-            );
-        }
-
         return (
             <div
                 className="mx_LeftPanel_filterContainer"
@@ -361,7 +348,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 <RoomSearch isMinimized={this.props.isMinimized} />
 
                 {dialPadButton}
-                {rightButton}
             </div>
         );
     }

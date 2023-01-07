@@ -443,3 +443,33 @@ $activeBorderColor: $primary-content;
 .mx_SpacePanel_sharePublicSpace {
     margin: 0;
 }
+
+.mx_LeftPanel_exploreButton {
+    position: relative;
+    margin-left: 16px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 12px;
+        width: 16px;
+        height: 16px;
+        mask-position: center;
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        background-color: $secondary-content;
+    }
+
+    &:hover {
+        background-color: $tertiary-content;
+
+        &::before {
+            background-color: $background;
+        }
+    }
+}
+
+.mx_LeftPanel_exploreButton::before {
+    mask-image: url("$(res)/img/element-icons/roomlist/explore.svg");
+}

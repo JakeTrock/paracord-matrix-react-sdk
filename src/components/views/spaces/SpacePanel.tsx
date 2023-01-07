@@ -29,6 +29,9 @@ import React, {
 import { DragDropContext, Draggable, Droppable, DroppableProvidedProps } from "react-beautiful-dnd";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
+import dis from "../../../dispatcher/dispatcher";
+import { ButtonEvent } from "../../views/elements/AccessibleButton";
+import PosthogTrackers from "../../../PosthogTrackers";
 
 import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
@@ -223,9 +226,9 @@ const CreateSpaceButton = ({
     const onNewClick = menuDisplayed
         ? closeMenu
         : () => {
-              if (!isPanelCollapsed) setPanelCollapsed(true);
-              openMenu();
-          };
+            if (!isPanelCollapsed) setPanelCollapsed(true);
+            openMenu();
+        };
 
     return (
         <li
@@ -276,6 +279,11 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
             return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
         });
 
+        const onExplore = (ev: ButtonEvent) => {
+            dis.fire(Action.ViewRoomDirectory);
+            PosthogTrackers.trackInteraction("WebLeftPanelExploreRoomsButton", ev);
+        };
+
         return (
             <IndicatorScrollbar
                 {...props}
@@ -284,8 +292,8 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                 style={
                     isDraggingOver
                         ? {
-                              pointerEvents: "none",
-                          }
+                            pointerEvents: "none",
+                        }
                         : undefined
                 }
                 element="ul"
@@ -321,7 +329,14 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                 ))}
                 {children}
                 {shouldShowComponent(UIComponent.CreateSpaces) && (
-                    <CreateSpaceButton isPanelCollapsed={isPanelCollapsed} setPanelCollapsed={setPanelCollapsed} />
+                    <>
+                        <CreateSpaceButton isPanelCollapsed={isPanelCollapsed} setPanelCollapsed={setPanelCollapsed} />
+                        {shouldShowComponent(UIComponent.ExploreRooms) && (<AccessibleTooltipButton
+                            className="mx_LeftPanel_exploreButton"
+                            onClick={onExplore}
+                            title={_t("Explore rooms")}
+                        />)}
+                    </>
                 )}
             </IndicatorScrollbar>
         );
@@ -370,9 +385,9 @@ const SpacePanel = () => {
                                             {IS_MAC
                                                 ? "⌘ + ⇧ + D"
                                                 : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) +
-                                                  " + " +
-                                                  _t(ALTERNATE_KEY_NAME[Key.SHIFT]) +
-                                                  " + D"}
+                                                " + " +
+                                                _t(ALTERNATE_KEY_NAME[Key.SHIFT]) +
+                                                " + D"}
                                         </div>
                                     </div>
                                 }
