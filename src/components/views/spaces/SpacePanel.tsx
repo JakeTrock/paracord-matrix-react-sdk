@@ -371,6 +371,20 @@ const SpacePanel = () => {
                         onKeyDown={onKeyDownHandler}
                         ref={ref}
                     >
+                        <Droppable droppableId="top-level-spaces">
+                            {(provided, snapshot) => (
+                                <InnerSpacePanel
+                                    {...provided.droppableProps}
+                                    isPanelCollapsed={isPanelCollapsed}
+                                    setPanelCollapsed={setPanelCollapsed}
+                                    isDraggingOver={snapshot.isDraggingOver}
+                                    innerRef={provided.innerRef}
+                                >
+                                    {provided.placeholder}
+                                </InnerSpacePanel>
+                            )}
+                        </Droppable>
+
                         <UserMenu isPanelCollapsed={isPanelCollapsed}>
                             <AccessibleTooltipButton
                                 className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
@@ -393,20 +407,6 @@ const SpacePanel = () => {
                                 }
                             />
                         </UserMenu>
-                        <Droppable droppableId="top-level-spaces">
-                            {(provided, snapshot) => (
-                                <InnerSpacePanel
-                                    {...provided.droppableProps}
-                                    isPanelCollapsed={isPanelCollapsed}
-                                    setPanelCollapsed={setPanelCollapsed}
-                                    isDraggingOver={snapshot.isDraggingOver}
-                                    innerRef={provided.innerRef}
-                                >
-                                    {provided.placeholder}
-                                </InnerSpacePanel>
-                            )}
-                        </Droppable>
-
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
                     </div>
                 )}
