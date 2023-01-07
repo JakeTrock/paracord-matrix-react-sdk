@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="paracord.svg"
+   inkscape:export-filename="/home/kapn/Desktop/paracord/src/customisations/paracord-matrix-react-sdk/res/img/user-onboarding/CommunityMessaging.png"
+   inkscape:export-xdpi="110"
+   inkscape:export-ydpi="110"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:zoom="3.1072954"
+     inkscape:cx="321.82329"
+     inkscape:cy="262.6078"
+     inkscape:window-width="1920"
+     inkscape:window-height="1002"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g333" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient902">
+      <stop
+         style="stop-color:#cccccc;stop-opacity:1;"
+         offset="0"
+         id="stop898" />
+      <stop
+         style="stop-color:#cccccc;stop-opacity:0;"
+         offset="1"
+         id="stop900" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient902"
+       id="linearGradient904"
+       x1="-164.64124"
+       y1="-34.428242"
+       x2="-101.63774"
+       y2="17.055885"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.82730113,0,0,0.82730113,178.33324,-7.622519)" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g333"
+       transform="translate(-2.9795828,88.152184)">
+      <ellipse
+         style="fill:url(#linearGradient904);fill-opacity:1;stroke-width:1.12927;stroke-dasharray:2.25853, 1.12927"
+         id="path852"
+         cx="78.842384"
+         cy="-6.2644553"
+         inkscape:export-filename="/home/kapn/Desktop/paracord/src/customisations/paracord-matrix-react-sdk/res/img/user-onboarding/encrypt.png"
+         inkscape:export-xdpi="132.33122"
+         inkscape:export-ydpi="132.33122"
+         rx="47.313999"
+         ry="47.313854" />
+      <path
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#76baff;stroke-width:1.365;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.73, 1.365;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 68.762241,-22.184344 15.171254,10.647937 m 9.104906,3.974883 12.985529,9.0437186"
+         id="path4389"
+         inkscape:export-filename="/home/kapn/Desktop/paracord/src/customisations/paracord-matrix-react-sdk/res/img/user-onboarding/encrypt.png"
+         inkscape:export-xdpi="132.33122"
+         inkscape:export-ydpi="132.33122"
+         sodipodi:nodetypes="cccc" />
+      <path
+         id="path335-5-1"
+         style="fill:#76baff;fill-opacity:1;stroke-width:0.264583"
+         d="m 68.290551,2.24737 7.33164,-39.985474 -22.766191,-0.0165 -7.331634,39.985473 z m -12.299665,-3.777156 -6.410933,0.115232 5.598625,-32.543747 h 15.568043 l -3.96876,23.547915 -9.117695,-0.0134 z m 5.220915,-15.495181 1.778704,-10.318753 -2.287716,4e-6 -1.919782,10.318749 z"
+         sodipodi:nodetypes="ccccccccccccccccc"
+         inkscape:export-filename="/home/kapn/Desktop/paracord/src/customisations/paracord-matrix-react-sdk/res/img/user-onboarding/encrypt.png"
+         inkscape:export-xdpi="132.33122"
+         inkscape:export-ydpi="132.33122" />
+      <g
+         id="g6535"
+         transform="translate(-0.52916667,-1.0583333)"
+         inkscape:export-filename="/home/kapn/Desktop/paracord/src/customisations/paracord-matrix-react-sdk/res/img/user-onboarding/encrypt.png"
+         inkscape:export-xdpi="132.33122"
+         inkscape:export-ydpi="132.33122">
+        <path
+           id="path335-5-6-7-7"
+           style="fill:#76baff;fill-opacity:1;stroke:none;stroke-width:0.137961;stroke-opacity:1"
+           d="m 84.40058,-21.258557 -3.63261,20.80621055 11.68061,0.05192 3.822919,-20.84952655 z m 6.965231,1.969515 2.044439,-0.04402 0.611793,0.767256 -2.784518,16.1858805 -8.117596,-2e-6 2.685465,-16.1962915 0.782895,-0.682516 2.39726,-0.02164 2.380262,-0.0087 -0.428114,2.280984 -2.362733,0.04044 -0.901754,4.954444 2.331024,0.0034 z m -3.712273,10.2642852 -0.489359,3.1958083 1.192881,-1e-6 0.562911,-3.1958093 z m 0.223257,-1.2040812 -0.146397,0.8884272 h 1.192879 l 0.219952,-0.8884272 z"
+           sodipodi:nodetypes="ccccccccccccccccccccccccccccc" />
+      </g>
+      <path
+         id="path335-5-3-0"
+         style="fill:#76baff;fill-opacity:1;stroke-width:0.264583"
+         d="m 107.05587,-26.273698 -6.96669,39.902399 22.40124,0.09958 7.33164,-39.985473 z m 12.29968,3.777157 6.41092,-0.115234 -5.59862,32.543753 -15.56805,-1e-6 3.96877,-23.547916 9.11768,0.0134 z m -5.22092,15.4951846 -1.77871,10.318756 2.28771,-6e-6 1.9198,-10.31875 z"
+         sodipodi:nodetypes="ccccccccccccccccc"
+         inkscape:export-filename="/home/kapn/Desktop/paracord/src/customisations/paracord-matrix-react-sdk/res/img/user-onboarding/encrypt.png"
+         inkscape:export-xdpi="132.33122"
+         inkscape:export-ydpi="132.33122" />
+    </g>
+    <path
+       style="fill:#000000;stroke-width:0.264583"
+       id="path41"
+       d="" />
+    <path
+       style="fill:#000000;stroke-width:0.264583"
+       id="path21"
+       d="" />
+  </g>
+</svg>
