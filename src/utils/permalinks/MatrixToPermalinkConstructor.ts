@@ -16,7 +16,7 @@ limitations under the License.
 
 import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 
-export const host = "matrix.to";
+export const host = "paracord.chat";
 export const baseUrl = `https://${host}`;
 
 /**
@@ -28,28 +28,23 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
     }
 
     public forEvent(roomId: string, eventId: string, serverCandidates: string[]): string {
-        return `${baseUrl}/#/${roomId}/${eventId}${this.encodeServerCandidates(serverCandidates)}`;
+        return `${baseUrl}/#/room/${roomId}/${eventId}`;
     }
 
     public forRoom(roomIdOrAlias: string, serverCandidates: string[]): string {
-        return `${baseUrl}/#/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
+        return `${baseUrl}/#/room/${roomIdOrAlias}`;
     }
 
     public forUser(userId: string): string {
-        return `${baseUrl}/#/${userId}`;
+        return `${baseUrl}/#/user/${userId}`;
     }
 
     public forEntity(entityId: string): string {
-        return `${baseUrl}/#/${entityId}`;
+        return `${baseUrl}/#/entity/${entityId}`;
     }
 
     public isPermalinkHost(testHost: string): boolean {
         return testHost === host;
-    }
-
-    public encodeServerCandidates(candidates: string[]) {
-        if (!candidates || candidates.length === 0) return "";
-        return `?via=${candidates.map((c) => encodeURIComponent(c)).join("&via=")}`;
     }
 
     // Heavily inspired by/borrowed from the matrix-bot-sdk (with permission):
