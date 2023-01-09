@@ -21,7 +21,7 @@ import { AuthHeaderContext } from "./AuthHeaderContext";
 interface Props {
     title: ReactNode;
     icon?: ReactNode;
-    serverPicker: ReactNode;
+    serverPicker?: ReactNode;
 }
 
 export function AuthHeaderDisplay({ title, icon, serverPicker, children }: PropsWithChildren<Props>) {

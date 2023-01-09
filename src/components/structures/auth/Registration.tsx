@@ -30,7 +30,7 @@ import AuthPage from "../../views/auth/AuthPage";
 import Login from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
-import ServerPicker from "../../views/elements/ServerPicker";
+// import ServerPicker from "../../views/elements/ServerPicker";
 import RegistrationForm from "../../views/auth/RegistrationForm";
 import AccessibleButton from "../../views/elements/AccessibleButton";
 import AuthBody from "../../views/auth/AuthBody";
@@ -678,16 +678,16 @@ export default class Registration extends React.Component<IProps, IState> {
                     <div className="mx_Register_mainContent">
                         <AuthHeaderDisplay
                             title={_t("Create account")}
-                            serverPicker={
-                                <ServerPicker
-                                    title={_t("Host account on")}
-                                    dialogTitle={_t("Decide where your account is hosted")}
-                                    serverConfig={this.props.serverConfig}
-                                    onServerConfigChange={
-                                        this.state.doingUIAuth ? undefined : this.props.onServerConfigChange
-                                    }
-                                />
-                            }
+                            // serverPicker={
+                            //     <ServerPicker
+                            //         title={_t("Host account on")}
+                            //         dialogTitle={_t("Decide where your account is hosted")}
+                            //         serverConfig={this.props.serverConfig}
+                            //         onServerConfigChange={
+                            //             this.state.doingUIAuth ? undefined : this.props.onServerConfigChange
+                            //         }
+                            //     />
+                            // }
                         >
                             {errorText}
                             {serverDeadSection}
