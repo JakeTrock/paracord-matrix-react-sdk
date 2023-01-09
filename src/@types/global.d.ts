@@ -51,6 +51,7 @@ import ActiveWidgetStore from "../stores/ActiveWidgetStore";
 import AutoRageshakeStore from "../stores/AutoRageshakeStore";
 import { IConfigOptions } from "../IConfigOptions";
 import { MatrixDispatcher } from "../dispatcher/dispatcher";
+import { UnclosableModalManager } from "../UnclosableModal";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -83,7 +84,7 @@ declare global {
         mxRoomListLayoutStore: RoomListLayoutStore;
         mxPlatformPeg: PlatformPeg;
         mxIntegrationManagers: typeof IntegrationManagers;
-        singletonModalManager: ModalManager;
+        singletonModalManager: ModalManager | UnclosableModalManager;
         mxSettingsStore: SettingsStore;
         mxNotifier: typeof Notifier;
         mxRightPanelStore: RightPanelStore;

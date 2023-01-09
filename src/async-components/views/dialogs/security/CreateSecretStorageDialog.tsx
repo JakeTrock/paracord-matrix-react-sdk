@@ -26,7 +26,7 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t, _td } from "../../../../languageHandler";
-import Modal from "../../../../Modal";
+import UnclosableModal from "../../../../UnclosableModal";
 import { promptForBackupPassphrase } from "../../../../SecurityManager";
 import { copyNode } from "../../../../utils/strings";
 import { SSOAuthEntry } from "../../../../components/views/auth/InteractiveAuthEntryComponents";
@@ -96,7 +96,7 @@ interface IState {
  */
 export default class CreateSecretStorageDialog extends React.PureComponent<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
-        hasCancel: true,
+        hasCancel: false,
         forceReset: false,
     };
     private recoveryKey: IRecoveryKey;
@@ -301,7 +301,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 },
             };
 
-            const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+            const { finished } = UnclosableModal.createDialog(InteractiveAuthDialog, {
                 title: _t("Setting up keys"),
                 matrixClient: MatrixClientPeg.get(),
                 makeRequest,
@@ -376,16 +376,12 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         }
     };
 
-    private onCancel = (): void => {
-        this.props.onFinished(false);
-    };
-
     private restoreBackup = async (): Promise<void> => {
         // It's possible we'll need the backup key later on for bootstrapping,
         // so let's stash it here, rather than prompting for it twice.
         const keyCallback = (k) => (this.backupKey = k);
 
-        const { finished } = Modal.createDialog(
+        const { finished } = UnclosableModal.createDialog(
             RestoreKeyBackupDialog,
             {
                 showSummary: false,
@@ -410,10 +406,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
     private onShowKeyContinueClick = (): void => {
         this.bootstrapSecretStorage();
-    };
-
-    private onCancelClick = (): void => {
-        this.setState({ phase: Phase.ConfirmSkip });
     };
 
     private onGoBackClick = (): void => {
@@ -547,8 +539,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 <DialogButtons
                     primaryButton={_t("Continue")}
                     onPrimaryButtonClick={this.onChooseKeyPassphraseFormSubmit}
-                    onCancel={this.onCancelClick}
-                    hasCancel={this.state.canSkip}
+                    hasCancel={false}
                 />
             </form>
         );
@@ -606,9 +597,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     hasCancel={false}
                     primaryDisabled={this.state.canUploadKeysWithPasswordOnly && !this.state.accountPassword}
                 >
-                    <button type="button" className="danger" onClick={this.onCancelClick}>
-                        {_t("Skip")}
-                    </button>
                 </DialogButtons>
             </form>
         );
@@ -646,9 +634,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     hasCancel={false}
                     disabled={!this.state.passPhraseValid}
                 >
-                    <button type="button" onClick={this.onCancelClick} className="danger">
-                        {_t("Cancel")}
-                    </button>
                 </DialogButtons>
             </form>
         );
@@ -704,9 +689,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     hasCancel={false}
                     disabled={this.state.passPhrase !== this.state.passPhraseConfirm}
                 >
-                    <button type="button" onClick={this.onCancelClick} className="danger">
-                        {_t("Skip")}
-                    </button>
                 </DialogButtons>
             </form>
         );
@@ -791,30 +773,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     <DialogButtons
                         primaryButton={_t("Retry")}
                         onPrimaryButtonClick={this.onLoadRetryClick}
-                        hasCancel={this.state.canSkip}
-                        onCancel={this.onCancel}
+                        hasCancel={false}
                     />
                 </div>
-            </div>
-        );
-    }
-
-    private renderPhaseSkipConfirm(): JSX.Element {
-        return (
-            <div>
-                <p>
-                    {_t("If you cancel now, you may lose encrypted messages & data if you lose access to your logins.")}
-                </p>
-                <p>{_t("You can also set up Secure Backup & manage your keys in Settings.")}</p>
-                <DialogButtons
-                    primaryButton={_t("Go back")}
-                    onPrimaryButtonClick={this.onGoBackClick}
-                    hasCancel={false}
-                >
-                    <button type="button" className="danger" onClick={this.onCancel}>
-                        {_t("Cancel")}
-                    </button>
-                </DialogButtons>
             </div>
         );
     }
@@ -829,8 +790,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 return _t("Set a Security Phrase");
             case Phase.PassphraseConfirm:
                 return _t("Confirm Security Phrase");
-            case Phase.ConfirmSkip:
-                return _t("Are you sure?");
             case Phase.ShowKey:
                 return _t("Save your Security Key");
             case Phase.Storing:
@@ -850,8 +809,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                         <DialogButtons
                             primaryButton={_t("Retry")}
                             onPrimaryButtonClick={this.bootstrapSecretStorage}
-                            hasCancel={this.state.canSkip}
-                            onCancel={this.onCancel}
+                            hasCancel={false}
                         />
                     </div>
                 </div>
@@ -881,9 +839,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     break;
                 case Phase.Storing:
                     content = this.renderBusyPhase();
-                    break;
-                case Phase.ConfirmSkip:
-                    content = this.renderPhaseSkipConfirm();
                     break;
             }
         }

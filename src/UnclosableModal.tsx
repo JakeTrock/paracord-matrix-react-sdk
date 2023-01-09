@@ -35,7 +35,6 @@ export interface IModal<T extends any[]> {
     onBeforeClose?(reason?: string): Promise<boolean>;
     onFinished(...args: T): void;
     close(...args: T): void;
-    forceModal: boolean;//make modal unclosable unless you complete it
     hidden?: boolean;
 }
 
@@ -64,7 +63,7 @@ type HandlerMap = {
     [ModalManagerEvent.Opened]: () => void;
 };
 
-export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMap> {
+export class UnclosableModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMap> {
     private counter = 0;
     // The modal to prioritise over all others. If this is set, only show
     // this modal. Remove all other modals from the stack when this modal
@@ -114,25 +113,16 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
 
     public createDialog<T extends any[]>(
         Element: React.ComponentType<any>,
-        ...rest: ParametersWithoutFirst<ModalManager["createDialogAsync"]>
+        ...rest: ParametersWithoutFirst<UnclosableModalManager["createDialogAsync"]>
     ) {
         return this.createDialogAsync<T>(Promise.resolve(Element), ...rest);
     }
 
     public appendDialog<T extends any[]>(
         Element: React.ComponentType,
-        ...rest: ParametersWithoutFirst<ModalManager["appendDialogAsync"]>
+        ...rest: ParametersWithoutFirst<UnclosableModalManager["appendDialogAsync"]>
     ) {
         return this.appendDialogAsync<T>(Promise.resolve(Element), ...rest);
-    }
-
-    public closeCurrentModal(reason: string) {
-        const modal = this.getCurrentModal();
-        if (!modal) {
-            return;
-        }
-        modal.closeReason = reason;
-        modal.close();
     }
 
     private buildModal<T extends any[]>(
@@ -140,14 +130,12 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         props?: IProps<T>,
         className?: string,
         options?: IOptions<T>,
-        forceModal?: boolean,
     ) {
         const modal: IModal<T> = {
             onFinished: props ? props.onFinished : null,
             onBeforeClose: options.onBeforeClose,
             beforeClosePromise: null,
             closeReason: null,
-            forceModal: forceModal || false,
             className,
 
             // these will be set below but we need an object reference to pass to getCloseFn before we can do that
@@ -305,20 +293,6 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         }
     }
 
-    private onBackgroundClick = () => {
-        // const modal = this.getCurrentModal();
-        // if (!modal) {
-        //     return;
-        // }
-        // // we want to pass a reason to the onBeforeClose
-        // // callback, but close is currently defined to
-        // // pass all number of arguments to the onFinished callback
-        // // so, pass the reason to close through a member variable
-        // modal.closeReason = "backgroundClick";
-        // modal.close();
-        // modal.closeReason = null;
-    };
-
     private getCurrentModal(): IModal<any> {
         return this.priorityModal ? this.priorityModal : this.modals[0] || this.staticModal;
     }
@@ -333,8 +307,8 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
             dis.dispatch({
                 action: "aria_unhide_main_app",
             });
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
+            ReactDOM.unmountComponentAtNode(UnclosableModalManager.getOrCreateContainer());
+            ReactDOM.unmountComponentAtNode(UnclosableModalManager.getOrCreateStaticContainer());
             return;
         }
 
@@ -351,18 +325,17 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
             const staticDialog = (
                 <div className={classes}>
                     <div className="mx_Dialog">{this.staticModal.elem}</div>
-                    <div
+                    {/* <div
                         data-testid="dialog-background"
                         className="mx_Dialog_background mx_Dialog_staticBackground"
-                        onClick={this.onBackgroundClick}
-                    />
+                    /> */}
                 </div>
             );
 
-            ReactDOM.render(staticDialog, ModalManager.getOrCreateStaticContainer());
+            ReactDOM.render(staticDialog, UnclosableModalManager.getOrCreateStaticContainer());
         } else {
             // This is safe to call repeatedly if we happen to do that
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
+            ReactDOM.unmountComponentAtNode(UnclosableModalManager.getOrCreateStaticContainer());
         }
 
         const modal = this.getCurrentModal();
@@ -374,23 +347,22 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
             const dialog = (
                 <div className={classes}>
                     <div className="mx_Dialog">{modal.elem}</div>
-                    <div
+                    {/* <div
                         data-testid="dialog-background"
                         className="mx_Dialog_background"
-                        onClick={this.onBackgroundClick}
-                    />
+                    /> */}
                 </div>
             );
 
-            setImmediate(() => ReactDOM.render(dialog, ModalManager.getOrCreateContainer()));
+            setImmediate(() => ReactDOM.render(dialog, UnclosableModalManager.getOrCreateContainer()));
         } else {
             // This is safe to call repeatedly if we happen to do that
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
+            ReactDOM.unmountComponentAtNode(UnclosableModalManager.getOrCreateContainer());
         }
     }
 }
 
 if (!window.singletonModalManager) {
-    window.singletonModalManager = new ModalManager();
+    window.singletonModalManager = new UnclosableModalManager();
 }
 export default window.singletonModalManager;
