@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Modal from "./Modal";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
@@ -46,6 +47,7 @@ import { recordClientInformation, removeClientInformation } from "./utils/device
 import SettingsStore, { CallbackFn } from "./settings/SettingsStore";
 import { UIFeature } from "./settings/UIFeature";
 import { isBulkUnverifiedDeviceReminderSnoozed } from "./utils/device/snoozeBulkUnverifiedDeviceReminder";
+import SetupEncryptionDialog from "./components/views/dialogs/security/SetupEncryptionDialog";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
@@ -237,9 +239,10 @@ export default class DeviceListener {
         // If we're in the middle of a secret storage operation, we're likely
         // modifying the state involved here, so don't add new toasts to setup.
         if (isSecretStorageBeingAccessed()) return false;
-        // Show setup toasts once the user is in at least one encrypted room.
+        // old: Show setup toasts once the user is in at least one encrypted room.
+        // new: bother user first so they get it out of the way.
         const cli = MatrixClientPeg.get();
-        return cli && cli.getRooms().some((r) => cli.isRoomEncrypted(r.roomId));
+        return cli && true; //cli.getRooms().some((r) => cli.isRoomEncrypted(r.roomId));
     }
 
     private async recheck() {
@@ -285,7 +288,9 @@ export default class DeviceListener {
                         hideSetupEncryptionToast();
                         accessSecretStorage();
                     } else {
-                        showSetupEncryptionToast(SetupKind.SET_UP_ENCRYPTION);
+                        // the user only really needs bothering here, or else they won't do it at all
+                        Modal.createDialog(SetupEncryptionDialog, {}, null, /* priority = */ false, /* static = */ true);
+                        // showSetupEncryptionToast(SetupKind.SET_UP_ENCRYPTION);
                     }
                 }
             }
