@@ -24,8 +24,8 @@ import { KeysWithObjectShape } from "./@types/common";
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
 export const DEFAULTS: IConfigOptions = {
     brand: "Paracord",
-    integrations_ui_url: "https://scalar.vector.im/",
-    integrations_rest_url: "https://scalar.vector.im/api",
+    integrations_ui_url: "",
+    integrations_rest_url: "",
     bug_report_endpoint_url: null,
     jitsi: {
         preferred_domain: "meet.element.io",
