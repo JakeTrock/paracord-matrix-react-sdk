@@ -281,36 +281,36 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let e2eeSection: JSX.Element;
-        if (this.state.joinRule !== JoinRule.Public) {
-            let microcopy: string;
-            if (privateShouldBeEncrypted()) {
-                if (this.state.canChangeEncryption) {
-                    microcopy = isVideoRoom
-                        ? _t("You can't disable this later. The room will be encrypted but the embedded call will not.")
-                        : _t("You can't disable this later. Bridges & most bots won't work yet.");
-                } else {
-                    microcopy = _t("Your server requires encryption to be enabled in private rooms.");
-                }
-            } else {
-                microcopy = _t(
-                    "Your server admin has disabled end-to-end encryption by default " +
-                        "in private rooms & Direct Messages.",
-                );
-            }
-            e2eeSection = (
-                <React.Fragment>
-                    <LabelledToggleSwitch
-                        label={_t("Enable end-to-end encryption")}
-                        onChange={this.onEncryptedChange}
-                        value={this.state.isEncrypted}
-                        className="mx_CreateRoomDialog_e2eSwitch" // for end-to-end tests
-                        disabled={!this.state.canChangeEncryption}
-                    />
-                    <p>{microcopy}</p>
-                </React.Fragment>
-            );
-        }
+        // let e2eeSection: JSX.Element;
+        // if (this.state.joinRule !== JoinRule.Public) {
+        //     let microcopy: string;
+        //     if (privateShouldBeEncrypted()) {
+        //         if (this.state.canChangeEncryption) {
+        //             microcopy = isVideoRoom
+        //                 ? _t("You can't disable this later. The room will be encrypted but the embedded call will not.")
+        //                 : _t("You can't disable this later. Bridges & most bots won't work yet.");
+        //         } else {
+        //             microcopy = _t("Your server requires encryption to be enabled in private rooms.");
+        //         }
+        //     } else {
+        //         microcopy = _t(
+        //             "Your server admin has disabled end-to-end encryption by default " +
+        //                 "in private rooms & Direct Messages.",
+        //         );
+        //     }
+        //     e2eeSection = (
+        //         <React.Fragment>
+        //             <LabelledToggleSwitch
+        //                 label={_t("Enable end-to-end encryption")}
+        //                 onChange={this.onEncryptedChange}
+        //                 value={this.state.isEncrypted}
+        //                 className="mx_CreateRoomDialog_e2eSwitch" // for end-to-end tests
+        //                 disabled={!this.state.canChangeEncryption}
+        //             />
+        //             <p>{microcopy}</p>
+        //         </React.Fragment>
+        //     );
+        // }
 
         let federateLabel = _t(
             "You might enable this if the room will only be used for collaborating with internal " +
@@ -368,7 +368,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         />
 
                         {publicPrivateLabel}
-                        {e2eeSection}
+                        {/* {e2eeSection} */}
                         {aliasField}
                         <details onToggle={this.onDetailsToggled} className="mx_CreateRoomDialog_details">
                             <summary className="mx_CreateRoomDialog_details_summary">
