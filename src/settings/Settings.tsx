@@ -921,7 +921,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             "Only applies if your homeserver does not offer one. " + "Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
-        default: null,
+        default: false,
     },
     "showImages": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
