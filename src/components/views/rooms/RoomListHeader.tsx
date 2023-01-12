@@ -255,34 +255,36 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                             PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuExploreRoomsItem", e);
                         }}
                     />
-                    <IconizedContextMenuOption
-                        label={_t("Add existing room")}
-                        iconClassName="mx_RoomListHeader_iconPlus"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            showAddExistingRooms(activeSpace);
-                            closePlusMenu();
-                        }}
-                        disabled={!canAddSubRooms}
-                        tooltip={!canAddSubRooms && _t("You do not have permissions to add rooms to this space")}
-                    />
-                    {canCreateSpaces && (
+                    {roomRecursion && <>
                         <IconizedContextMenuOption
-                            label={_t("Add space")}
+                            label={_t("Add existing room")}
                             iconClassName="mx_RoomListHeader_iconPlus"
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                showCreateNewSubspace(activeSpace);
+                                showAddExistingRooms(activeSpace);
                                 closePlusMenu();
                             }}
-                            disabled={!canAddSubSpaces}
-                            tooltip={!canAddSubSpaces && _t("You do not have permissions to add spaces to this space")}
-                        >
-                            <BetaPill />
-                        </IconizedContextMenuOption>
-                    )}
+                            disabled={!canAddSubRooms}
+                            tooltip={!canAddSubRooms && _t("You do not have permissions to add rooms to this space")}
+                        />
+                        {canCreateSpaces && (
+                            <IconizedContextMenuOption
+                                label={_t("Add space")}
+                                iconClassName="mx_RoomListHeader_iconPlus"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    showCreateNewSubspace(activeSpace);
+                                    closePlusMenu();
+                                }}
+                                disabled={!canAddSubSpaces}
+                                tooltip={!canAddSubSpaces && _t("You do not have permissions to add spaces to this space")}
+                            >
+                                <BetaPill />
+                            </IconizedContextMenuOption>
+                        )}
+                    </>}
                 </IconizedContextMenuOptionList>
             </IconizedContextMenu>
         );

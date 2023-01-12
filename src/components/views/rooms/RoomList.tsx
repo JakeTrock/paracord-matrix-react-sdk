@@ -283,7 +283,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                                 <BetaPill />
                             </IconizedContextMenuOption>
                         )}
-                        <IconizedContextMenuOption
+                        {/* <IconizedContextMenuOption
                             label={_t("Add existing room")}
                             iconClassName="mx_RoomList_iconAddExistingRoom"
                             onClick={(e) => {
@@ -296,7 +296,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                             tooltip={
                                 canAddRooms ? undefined : _t("You do not have permissions to add rooms to this space")
                             }
-                        />
+                        /> */}
                     </>
                 ) : null}
             </IconizedContextMenuOptionList>

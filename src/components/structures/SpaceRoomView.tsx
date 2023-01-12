@@ -109,7 +109,7 @@ const SpaceLandingAddButton = ({ space }) => {
     const canCreateSpace = shouldShowComponent(UIComponent.CreateSpaces);
     const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
-
+    const roomRecursion = false;
     let contextMenu: JSX.Element | null = null;
     if (menuDisplayed) {
         const rect = handle.current.getBoundingClientRect();
@@ -165,30 +165,32 @@ const SpaceLandingAddButton = ({ space }) => {
                             )}
                         </>
                     )}
-                    <IconizedContextMenuOption
-                        label={_t("Add existing room")}
-                        iconClassName="mx_RoomList_iconAddExistingRoom"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            closeMenu();
-                            showAddExistingRooms(space);
-                        }}
-                    />
-                    {canCreateSpace && (
+                    {roomRecursion && <>
                         <IconizedContextMenuOption
-                            label={_t("Add space")}
-                            iconClassName="mx_RoomList_iconPlus"
+                            label={_t("Add existing room")}
+                            iconClassName="mx_RoomList_iconAddExistingRoom"
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 closeMenu();
-                                showCreateNewSubspace(space);
+                                showAddExistingRooms(space);
                             }}
-                        >
-                            <BetaPill />
-                        </IconizedContextMenuOption>
-                    )}
+                        />
+                        {canCreateSpace && (
+                            <IconizedContextMenuOption
+                                label={_t("Add space")}
+                                iconClassName="mx_RoomList_iconPlus"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    closeMenu();
+                                    showCreateNewSubspace(space);
+                                }}
+                            >
+                                <BetaPill />
+                            </IconizedContextMenuOption>
+                        )}
+                    </>}
                 </IconizedContextMenuOptionList>
             </IconizedContextMenu>
         );
@@ -396,7 +398,7 @@ const SpaceAddExistingRooms = ({ space, onFinished }) => {
             <div className="mx_SpaceRoomView_description">
                 {_t(
                     "Pick rooms or conversations to add. This is just a space for you, " +
-                        "no one will be informed. You can add more later.",
+                    "no one will be informed. You can add more later.",
                 )}
             </div>
 
@@ -568,7 +570,7 @@ const SpaceSetupPrivateInvite = ({ space, onFinished }) => {
             <div className="mx_SpaceRoomView_inviteTeammates_betaDisclaimer">
                 {_t(
                     "<b>This is an experimental feature.</b> For now, " +
-                        "new users receiving an invite will have to open the invite on <link/> to actually join.",
+                    "new users receiving an invite will have to open the invite on <link/> to actually join.",
                     {},
                     {
                         b: (sub) => <b>{sub}</b>,
