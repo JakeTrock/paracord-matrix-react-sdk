@@ -113,6 +113,7 @@ interface IProps {
 }
 
 const RoomListHeader = ({ onVisibilityChange }: IProps) => {
+    const roomRecursion = false;
     const cli = useContext(MatrixClientContext);
     const [mainMenuDisplayed, mainMenuHandle, openMainMenu, closeMainMenu] = useContextMenu<HTMLDivElement>();
     const [plusMenuDisplayed, plusMenuHandle, openPlusMenu, closePlusMenu] = useContextMenu<HTMLDivElement>();
